@@ -1,21 +1,26 @@
-const cTable = require('console.table');
+const inquirer = require('inquirer');
 const dbConnect = require('./dbConnect');
 
-const addNewDepartment = () => {
-// Questions for adding new department
-const addDepartmentQuest = [
-    {
-        type: 'input',
-        name: 'name',
-        message: "What's the name of the Department?",
-    },
-    {// Creating a list input type for user to navigate application
-        type: 'list',
-        message: 'What would you like to do?',
-        name: 'optSelected',
-        choices: ['View all Departments', 'View all Roles','View all Employees', 'Add a Department', 'Add a Role', 'Add an Employee', 'Update an Employee Role', 'Quit'],
-    },
- ];
+const addNewDepartment = async () => {
+    const navigate = require('./navigate');
+    const db = await dbConnect()
+
+    // Question for adding new department
+    const newDeptNameQuest = [{
+            type: 'input',
+            name: 'name',
+            message: "What's the name of the Department?",
+        }];
+
+    inquirer.prompt(newDeptNameQuest).then((answers) => {
+        const sql = "INSERT INTO department (name) VALUES (?)"
+        const newDept = answers.name;
+        // console.log(newDept);
+        db.query(sql, newDept);
+        console.log(`Added ${answers.name} to the database`);
+        navigate() 
+    })
+    
 }
 
 module.exports = addNewDepartment

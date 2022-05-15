@@ -10,14 +10,12 @@ const quit = require('./quit')
 
 
 const navigate = () => {
-    const navQuestions = [
-        {// Creating a list input type for user to navigate application
+    const navQuestions = [{// Creating a list input type for user to navigate application
             type: 'list',
             message: 'What would you like to do?',
             name: 'optSelected',
             choices: ['View all Departments', 'View all Roles','View all Employees', 'Add a Department', 'Add a Role', 'Add an Employee', 'Update an Employee Role', 'Quit'],
-        },
-     ];
+        }];
 
     inquirer.prompt(navQuestions).then((answers) => {
         // console.log(`Your selection: ${answers.optSelected}`);
