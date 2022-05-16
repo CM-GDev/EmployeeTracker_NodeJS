@@ -20,7 +20,7 @@ const navigate = () => {
         }];
 
     inquirer.prompt(navQuestions).then((answers) => {
-        // console.log(`Your selection: ${answers.optSelected}`);
+        
         //Depending on what option the user selected, the appropriate action will follow
         if (answers.optSelected == 'View all Departments') {
             viewAllDepts();
@@ -41,5 +41,5 @@ const navigate = () => {
         }
     })
 };
-// Export module
+// Export navigate module
 module.exports = navigate

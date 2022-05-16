@@ -1,4 +1,5 @@
 // ASCII-art Logo for the Application
+// Establish required package
 const logo = require('asciiart-logo');
 
 const ASCIIart = (color) => {
@@ -18,4 +19,5 @@ const ASCIIart = (color) => {
         .render()
     );
 }
+// Exporting module
 module.exports = ASCIIart

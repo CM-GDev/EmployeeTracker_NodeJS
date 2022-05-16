@@ -1,7 +1,8 @@
+// Establish required packages and modules
 const mysql = require("mysql2/promise");
 require('dotenv').config();
 
-// Connect to database and seed/populate with inital data
+// Connect to database
 const dbConnect = () => {
    const db = mysql.createConnection(
         {
@@ -14,5 +15,5 @@ const dbConnect = () => {
     );
     return db
 };
-
+// Export module
 module.exports = dbConnect

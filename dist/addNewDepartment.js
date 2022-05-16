@@ -30,12 +30,11 @@ const addNewDepartment = async () => {
             }
         });
         console.log(`
-        Added ${answers.name} to the database
+        Added new department ${answers.name} to the database
         `);
         // run navigate function
         navigate() 
     });
-    
 };
 
 // Export module

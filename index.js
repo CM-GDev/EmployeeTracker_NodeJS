@@ -17,11 +17,11 @@ const initQuestions = [
         default: true,
     },
  ];
-
+// Function for starting inquirer and seeding database
 function init() {
     inquirer.prompt(initQuestions).then(() => {
         seedDB();
     });
 };
-
+// Calling init function
 init();

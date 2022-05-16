@@ -1,10 +1,16 @@
+// Calling dbConnect module
 const dbConnect = require('./dbConnect');
 
+// Function for seeding my_company_db
 const seedDB = async () => {
+    // Establish navigate function for later use
     const navigate = require('./navigate');
+     // Connect to database
     const db = await dbConnect();
     
+    // Setting up mysql query
     var sql = "INSERT INTO department (name) VALUES ?";
+    // Establishing var values content
     var values = [
         ['Engineering'],
         ['Sales'],
@@ -12,11 +18,13 @@ const seedDB = async () => {
         ['Production'],
         ['Legal']
     ];
+    // running mysql query
     db.query(sql, [values], function (err, result) {
-        if (err) throw err;
-    });
+        if (err) throw err});
 
+    // Setting up mysql query
     sql = "INSERT INTO role (title, salary, department_id) VALUES ?";
+    // Establishing var values content
     values = [
         ["Sales Lead", 100000, 2],
         ["Salesperson", 80000, 2],
@@ -29,11 +37,13 @@ const seedDB = async () => {
         ["Lawyer", 190000, 5],
         ["Production Manager", 150000, 4]
     ]
+    // running mysql query
     db.query(sql, [values], function (err, result) {
-        if (err) throw err;
-    });
+        if (err) throw err});
 
+    // Setting up mysql query
     sql = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ?";
+    // Establishing var values content
     values = [
         ["John", "Ross", 1, null],
         ["Mike", "Thomas", 2, 1],
@@ -46,11 +56,12 @@ const seedDB = async () => {
         ["Tom", "Lourd", 9, 8],
         ["Robert", "Llamas", 10, null]
     ]
+    // running mysql query
     db.query(sql, [values], function (err, result) {
-        if (err) throw err;
-    });
-    // console.log('seeded')
+        if (err) throw err});
+    
+    // running navigate function
     navigate();
 }
-
+// Exporting seed function
 module.exports = seedDB

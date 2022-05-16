@@ -53,7 +53,7 @@ const addNewRole = async () => {
         });
         // Console logging message and running navigate function
         console.log(`
-        Added ${answers.roleName} to the database
+        Added new role ${answers.roleName} to the database
         `);
         navigate()        
     });

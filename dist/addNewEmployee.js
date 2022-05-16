@@ -43,11 +43,10 @@ const addNewEmployee = async () => {
     ];
     // run inquirer prompt
     inquirer.prompt(addEmployeeQuest).then((answers) => {
-
         // Using filter method to extract the role selected from the role table
         const roleID = roleTable.filter(dID => dID.name == answers.role);
 
-        // Using filter method to extract the manager selected the from manager table
+        // Using filter method to extract the manager selected from manager table
         const managerID = managerTable.filter(dID => dID.name == answers.manager);
         // saving manager id to variable
         var manID = managerID[0].id;
@@ -63,8 +62,6 @@ const addNewEmployee = async () => {
         const values = [
             [answers.firstName, answers.lastName, roleID[0].id, manID]
         ];
-
-        console.log(values);
         // running mysql query
         db.query(sql, values,(err, result) => {
             if (err) {
@@ -73,7 +70,7 @@ const addNewEmployee = async () => {
         });    
         // Console logging message and running navigate function
         console.log(`
-        Added ${answers.firstName} ${answers.lastName}to the database
+        Added ${answers.firstName} ${answers.lastName} to the database
         `);
         navigate() 
     });

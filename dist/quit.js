@@ -1,7 +1,7 @@
 
 const quit = () => {
     console.log('Thank you for using this application')
-    exit
+    return
 }
 
 module.exports = quit

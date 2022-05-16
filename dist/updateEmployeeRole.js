@@ -1,48 +1,60 @@
+// Establish required packages and modules
 const inquirer = require('inquirer');
 const dbConnect = require('./dbConnect');
 
+// Function for udpdating employee role
 const updateEmployeeRole = async () => {
+    // Establish navigate function for later use
     const navigate = require('./navigate');
+    // Connect to database
     const db = await dbConnect();
    
-    const [employeeTable] = await db.query('SELECT * FROM employee');
-
-    const possibleEmployees=[];
-
-    for(let i=0; i<roleTable.length; i++) {
-        possibleEmployees.push(employeeTable[i].last_name)
-    }
-
-    const [roleTable] = await db.query('SELECT * FROM role');
-    const possibleRoles =[];
-
-    for(let i=0; i<roleTable.length; i++) {
-        possibleRoles.push(roleTable[i].title)
-    }
-   
-    // Questions for updating employee role
+    //db.query for storing employee table to a variable
+    const [employeeTable] = await db.query('SELECT employee.id, CONCAT(employee.first_name," ", employee.last_name) AS name FROM employee');
+    //db.query for storing role table to a variable
+    const [roleTable] = await db.query('SELECT role.id, role.title AS name FROM role');
+    
+    // Questions for updating employee's role
     const updateEmployeeRoleQuest = [
         {
             type: 'list',
-            name: 'roleUpdate',
+            name: 'employee',
             message: "Which employee's role do you want to update?",
-            choices: possibleEmployees
+            choices: employeeTable
         },
         {
             type: 'list',
             message: "Which role do you want to assign the selected employee?",
             name: 'newRole',
-            choices: possibleRoles,
+            choices: roleTable,
         },
     ];
+    // run inquirer prompt
     inquirer.prompt(updateEmployeeRoleQuest).then((answers) => {
-        const sql ='UPDATE employee SET role_id = ? WHERE last_name = ?'
-        const values = [answers.newRole, answers.roleUpdate]
-        console.log(values);
-        // db.query(sql, values);
-        console.log(`Added ${answers.roleName} to the database`);
+        // Using filter method to extract the employee selected from the employee table
+        const employeeID = employeeTable.filter(dID => dID.name == answers.employee);
+        // Using filter method to extract the role selected from the role table
+        const roleID = roleTable.filter(dID => dID.name == answers.newRole);
+    
+        // Setting up mysql query
+        const sql ='UPDATE employee SET role_id = ? WHERE id = ?'
+        const values = [
+            [roleID[0].id],
+            [employeeID[0].id]
+        ];
+        // console.log(values);
+        // running mysql query
+        db.query(sql, values,(err, result) => {
+            if (err) {
+                throw err;
+            } 
+        });    
+        // Console logging message and running navigate function
+        console.log(`
+        Updated role for ${employeeID[0].name}
+        `);
         navigate()
     });
 }
-
+// Exporting module
 module.exports = updateEmployeeRole
