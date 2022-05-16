@@ -1,3 +1,4 @@
+// Establish required packages and modules
 const inquirer = require('inquirer');
 const viewAllDepts = require('./viewAllDepts');
 const viewAllRoles = require('./viewAllRoles');
@@ -10,7 +11,8 @@ const quit = require('./quit')
 
 
 const navigate = () => {
-    const navQuestions = [{// Creating a list input type for user to navigate application
+    const navQuestions = [{
+        // Creating a list input type for user to navigate application
             type: 'list',
             message: 'What would you like to do?',
             name: 'optSelected',
@@ -39,5 +41,5 @@ const navigate = () => {
         }
     })
 };
-
+// Export module
 module.exports = navigate

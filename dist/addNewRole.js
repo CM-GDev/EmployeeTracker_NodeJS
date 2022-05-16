@@ -9,7 +9,7 @@ const addNewRole = async () => {
     // Connect to database
     const db = await dbConnect();
     
-    // db.query for extracting department names from department table
+    // db.query for storing department table to a variable
     const [deptTable] = await db.query('SELECT * FROM department');
     // console.log(deptTable)
 
@@ -35,10 +35,9 @@ const addNewRole = async () => {
 
     // run inquirer prompt
     inquirer.prompt(roleQuest).then((answers) => {
-        // Using filter method to extract the ID value of the selected department
+
+        // Using filter method to extract the selected dept from the department table
         const deptID = deptTable.filter(dID => dID.name == answers.department)
-        // console.log(deptID);
-        // console.log(deptID[0].id)
         
         // setting up mysql query
         const sql = "INSERT INTO role (title, salary, department_id) VALUES (?)"
@@ -46,7 +45,6 @@ const addNewRole = async () => {
         const values = [
             [answers.roleName, answers.salary, deptID[0].id]
         ];
-        
         // running mysql query
         db.query(sql, values,(err, result) => {
             if (err) {
@@ -59,7 +57,6 @@ const addNewRole = async () => {
         `);
         navigate()        
     });
-
 }
 
 // Exporting module
