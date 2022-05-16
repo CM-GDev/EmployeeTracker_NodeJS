@@ -6,20 +6,15 @@ const addNewEmployee = async () => {
     const db = await dbConnect();
     
     const [roleTable] = await db.query('SELECT * FROM role');
-    console.log(roleTable);
-    console.log(roleTable[1].name);
-    console.log(roleTable.length);
-
+    const [employeeTable] = await db.query('SELECT * FROM employee');
+    
     const possibleRoles=[];
 
     for(let i=0; i<roleTable.length; i++) {
-        possibleRoles.push(roleTable[i].name)
+        possibleRoles.push(roleTable[i].title)
     }
-
-    // Questions for adding a new role
-
-
-// Questions for adding a new employee
+    // console.log(possibleRoles)
+    // Questions for adding a new employee
     const addEmployeeQuest = [
         {
             type: 'input',
@@ -35,7 +30,7 @@ const addNewEmployee = async () => {
             type: 'list',
             message: "What's the employee's role?",
             name: 'role',
-            choices: [],
+            choices: possibleRoles,
         },
         {
             type: 'list',
@@ -44,13 +39,19 @@ const addNewEmployee = async () => {
             choices: [],
         },
     ];
+
     inquirer.prompt(addEmployeeQuest).then((answers) => {
         const sql = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?)"
         const values = [answers.firstName, answers.lastName, answers.role, answers.manager];
         console.log(values);
-        // db.query(sql, values);
-        console.log(`Added ${answers.roleName} to the database`);
-        navigate() 
+        db.query(sql, values,(err, result) => {
+            if (err) {
+                throw err;
+            } else{
+                console.log(`Added ${answers.firstName} ${answers.lastName}to the database`);
+                navigate() 
+            }
+        });   
     });
 }
 
