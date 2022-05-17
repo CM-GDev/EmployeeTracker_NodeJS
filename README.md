@@ -37,7 +37,7 @@
   
   ## Usage
   
-  After installing the items above, use this [Walkthrough](https://youtu.be/GO807vkxKDg) video as a guide for using this application.
+  After installing the items above, use this [Walkthrough](https://youtu.be/RPUgi_opX3w) video as a guide for using this application.
     
   ## Credits
 
