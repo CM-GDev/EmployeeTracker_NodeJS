@@ -10,11 +10,15 @@ const viewAllEmployees = async () => {
     const db = await dbConnect()
 
     // db.query for joining employee table with role table and extracting to const [employeeTable]
-    const [employeeTable] = await db.query(`SELECT employee.id, employee.first_name, employee.last_name, employee.manager_id as manager, role.title, role.salary, department.name as department
-    FROM employee, role, department
-    WHERE role.department_id = department.id
-    AND employee.role_id = role.id`)
-    // AND employee.manager_id = employee.id`)
+    const [employeeTable] = await db.query(`SELECT employee.id, employee.first_name, employee.last_name, CONCAT(manager.first_name," ",manager.last_name) as manager, role.title, role.salary, department.name as department
+    FROM employee
+    LEFT JOIN role
+    ON role.id = employee.role_id
+    LEFT JOIN department
+    ON department.id = role.department_id
+    LEFT JOIN employee manager
+    ON employee.manager_id = manager.id
+    `)
     
     // passing db.query table to cTable for formatting before console logging
     const table = cTable.getTable(employeeTable);
